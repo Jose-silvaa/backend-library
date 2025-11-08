@@ -1,0 +1,11 @@
+C:\Users\jvito\Development\jose\Projects\library_CQRS\library.Domain\bin\Debug\net9.0\library.Domain.deps.json
+C:\Users\jvito\Development\jose\Projects\library_CQRS\library.Domain\bin\Debug\net9.0\library.Domain.dll
+C:\Users\jvito\Development\jose\Projects\library_CQRS\library.Domain\bin\Debug\net9.0\library.Domain.pdb
+C:\Users\jvito\Development\jose\Projects\library_CQRS\library.Domain\obj\Debug\net9.0\library.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\jvito\Development\jose\Projects\library_CQRS\library.Domain\obj\Debug\net9.0\library.Domain.AssemblyInfoInputs.cache
+C:\Users\jvito\Development\jose\Projects\library_CQRS\library.Domain\obj\Debug\net9.0\library.Domain.AssemblyInfo.cs
+C:\Users\jvito\Development\jose\Projects\library_CQRS\library.Domain\obj\Debug\net9.0\library.Domain.csproj.CoreCompileInputs.cache
+C:\Users\jvito\Development\jose\Projects\library_CQRS\library.Domain\obj\Debug\net9.0\library.Domain.dll
+C:\Users\jvito\Development\jose\Projects\library_CQRS\library.Domain\obj\Debug\net9.0\refint\library.Domain.dll
+C:\Users\jvito\Development\jose\Projects\library_CQRS\library.Domain\obj\Debug\net9.0\library.Domain.pdb
+C:\Users\jvito\Development\jose\Projects\library_CQRS\library.Domain\obj\Debug\net9.0\ref\library.Domain.dll
