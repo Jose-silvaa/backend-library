@@ -9,3 +9,7 @@ C:\Users\jvito\Development\jose\Projects\library_CQRS\library.Domain\obj\Debug\n
 C:\Users\jvito\Development\jose\Projects\library_CQRS\library.Domain\obj\Debug\net9.0\refint\library.Domain.dll
 C:\Users\jvito\Development\jose\Projects\library_CQRS\library.Domain\obj\Debug\net9.0\library.Domain.pdb
 C:\Users\jvito\Development\jose\Projects\library_CQRS\library.Domain\obj\Debug\net9.0\ref\library.Domain.dll
+C:\Users\jvito\Development\jose\Projects\library_CQRS\library.Domain\obj\Debug\net9.0\library.Domain.csproj.AssemblyReference.cache
+C:\Users\jvito\Development\jose\Projects\library_CQRS\library.Domain\obj\Debug\net9.0\library.Domain.sourcelink.json
+C:\Users\jvito\Development\jose\Projects\library_CQRS\library.Domain\bin\Debug\net9.0\library.Domain.runtimeconfig.json
+C:\Users\jvito\Development\jose\Projects\library_CQRS\library.Domain\obj\Debug\net9.0\library.Domain.genruntimeconfig.cache
