@@ -13,3 +13,6 @@ C:\Users\jvito\Development\jose\Projects\library_CQRS\library.API\obj\Debug\net9
 C:\Users\jvito\Development\jose\Projects\library_CQRS\library.API\obj\Debug\net9.0\ref\library.API.dll
 C:\Users\jvito\Development\jose\Projects\library_CQRS\library.API\bin\Debug\net9.0\library.Domain.dll
 C:\Users\jvito\Development\jose\Projects\library_CQRS\library.API\bin\Debug\net9.0\library.Domain.pdb
+C:\Users\jvito\Development\jose\Projects\library_CQRS\library.API\obj\Debug\net9.0\library.API.sourcelink.json
+C:\Users\jvito\Development\jose\Projects\library_CQRS\library.API\bin\Debug\net9.0\library.API.runtimeconfig.json
+C:\Users\jvito\Development\jose\Projects\library_CQRS\library.API\obj\Debug\net9.0\library.API.genruntimeconfig.cache

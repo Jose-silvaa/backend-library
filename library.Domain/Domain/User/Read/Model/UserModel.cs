@@ -15,7 +15,7 @@ public class UserModel : BaseModel
     public string Email { get; set; }
     public string Password { get; set; }
     
-    public UserRole Role { get; private set; } // 👈 novo campo
+    public UserRole Role { get; private set; }
 
 
     public UserModel(string email, string password,  UserRole role = UserRole.Cliente)
