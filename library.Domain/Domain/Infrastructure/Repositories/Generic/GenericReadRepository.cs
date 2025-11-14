@@ -6,12 +6,12 @@ namespace library.Domain.Domain.Infrastructure.Repositories.Generic;
 public class GenericReadRepository<T> : IGenericReadRepository<T> where T : class
 {
     private IGenericReadRepository<T> _genericReadRepositoryImplementation;
-    public Task<T> GetByIdAsync(Guid id)
+    public virtual Task<T?> GetByIdAsync(Guid id)
     {
         return _genericReadRepositoryImplementation.GetByIdAsync(id);
     }
 
-    public Task<IEnumerable<T>> GetAllAsync()
+    public virtual Task<IEnumerable<T>> GetAllAsync()
     {
         return _genericReadRepositoryImplementation.GetAllAsync();
     }

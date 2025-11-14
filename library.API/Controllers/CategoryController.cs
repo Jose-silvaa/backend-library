@@ -1,4 +1,5 @@
-﻿using library.Domain.Domain.Category.Write.Commands;
+﻿using library.Domain.Domain.Category.Read.Repositories;
+using library.Domain.Domain.Category.Write.Commands;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,10 +11,13 @@ namespace library.API.Controllers;
 public class CategoryController : ControllerBase
 {
     private readonly IMediator _mediator;
+    private readonly ICategoryReadRepository  _categoryRepository;
 
     public CategoryController(
+        ICategoryReadRepository categoryRepository,
         IMediator mediator)
     {
+        _categoryRepository = categoryRepository;
         _mediator = mediator;
     }
 
@@ -24,4 +28,23 @@ public class CategoryController : ControllerBase
         
         return Ok(new {Message = "Categoria criada com sucesso"});
     }
+
+    #region queries
+    
+    [HttpGet]
+    public async Task<IActionResult> GetAll()
+    {
+        var categories = await _categoryRepository.GetAllAsync();
+        return Ok(categories);
+    }
+
+    [HttpGet("{id:guid}")]
+    public async Task<IActionResult> GetById(Guid id)
+    {
+        var category = await _categoryRepository.GetByIdAsync(id);
+        
+        return Ok(category);
+    }
+
+    #endregion
 }

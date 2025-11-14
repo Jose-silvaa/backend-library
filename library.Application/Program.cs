@@ -1,4 +1,8 @@
 using System.Text;
+using library.Domain.Domain.Book.Read.Repositories;
+using library.Domain.Domain.Book.Write.Commands;
+using library.Domain.Domain.Book.Write.Repositories;
+using library.Domain.Domain.Category.Read.Repositories;
 using library.Domain.Domain.Category.Write.Repositories;
 using library.Domain.Domain.Infrastructure;
 using library.Domain.Domain.User.Read.Model;
@@ -35,8 +39,12 @@ builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<Cr
 
 builder.Services.AddScoped<IPasswordHasher<UserModel>, PasswordHasher<UserModel>>();
 builder.Services.AddScoped<IUserWriteRepository, UserWriteRepository>();
-builder.Services.AddScoped<ICategoryWriteRepository, CategoryWriteRepository>();
 builder.Services.AddScoped<UserQueryHandler>();
+builder.Services.AddScoped<ICategoryWriteRepository, CategoryWriteRepository>();
+builder.Services.AddScoped<ICategoryReadRepository, CategoryReadRepository>();
+builder.Services.AddScoped<IBookWriteRepository, BookWriteRepository>();
+builder.Services.AddScoped<IBookReadRepository, BookReadRepository>();
+
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
