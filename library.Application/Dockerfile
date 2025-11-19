@@ -11,7 +11,6 @@ ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["library.Application/library.Application.csproj", "library.Application/"]
 COPY ["library.API/library.API.csproj", "library.API/"]
-COPY ["library.Domain/library.Domain.csproj", "library.Domain/"]
 RUN dotnet restore "library.Application/library.Application.csproj"
 COPY . .
 WORKDIR "/src/library.Application"
