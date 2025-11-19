@@ -18,7 +18,11 @@ public class AuthController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Login([FromBody] LoginCommand cmd)
     {
-        var token = await _mediator.Send(cmd);
-        return Ok(new { token });
+        var result  = await _mediator.Send(cmd);
+        
+        if (!result.Success)
+            return Unauthorized(new { error = result.ErrorMessage });
+        
+        return Ok(new { token = result.Data });
     }
 }

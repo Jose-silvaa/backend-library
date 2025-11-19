@@ -8,29 +8,21 @@ namespace library.Domain.Domain.Book.Read.Repositories;
 
 public interface IBookReadRepository : IGenericReadRepository<BookModel>
 {
-    new Task<BookModel?> GetByIdAsync(Guid id);
-    
-    new Task<IEnumerable<BookModel>> GetAllAsync();
+    Task<int> GetTotalNumberOfBooks();
 }
 
 public class BookReadRepository : GenericReadRepository<BookModel>, IBookReadRepository
 {
     private readonly LibraryDbContext _context;
 
-    public BookReadRepository(LibraryDbContext context)
+    public BookReadRepository(LibraryDbContext context) : base(context)
     {
         _context = context;
     }
 
-    public override async Task<BookModel?> GetByIdAsync(Guid id)
+    public async Task<int> GetTotalNumberOfBooks()
     {
-        return await _context.Books.FirstOrDefaultAsync(x => x.Id == id);
+        return await _context.Books.CountAsync();
     }
-    
-    public override async Task<IEnumerable<BookModel>> GetAllAsync()
-    {
-        return await _context.Books.ToListAsync();
-    }
-    
     
 }

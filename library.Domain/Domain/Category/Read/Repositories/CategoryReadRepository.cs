@@ -9,27 +9,15 @@ namespace library.Domain.Domain.Category.Read.Repositories;
 
 public interface ICategoryReadRepository : IGenericReadRepository<CategoryModel>
 {
-    new Task<CategoryModel?> GetByIdAsync(Guid id);
-    new Task<IEnumerable<CategoryModel>> GetAllAsync();
+  
 }
 
 public class CategoryReadRepository : GenericReadRepository<CategoryModel>, ICategoryReadRepository
 {
     private readonly LibraryDbContext _context;
 
-    public CategoryReadRepository(LibraryDbContext context)
+    public CategoryReadRepository(LibraryDbContext context) : base(context)
     {
-        _context = context;
-    }
-
-    public override async Task<CategoryModel?> GetByIdAsync(Guid id)
-    {
-        return await _context.Categories.FirstOrDefaultAsync(x => x.Id == id);
-    }
-
-    public override async Task<IEnumerable<CategoryModel>> GetAllAsync()
-    {
-        return await _context.Categories.ToListAsync();
     }
 
 }

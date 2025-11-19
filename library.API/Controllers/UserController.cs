@@ -3,7 +3,6 @@ using library.Domain.Domain.User.Write.Commands;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
 namespace library.API.Controllers;
 
@@ -13,22 +12,30 @@ namespace library.API.Controllers;
 public class UserController : ControllerBase
 {
     private readonly IMediator _mediator;
-    private readonly UserQueryHandler _queryHandler;
+    private readonly IUserReadRepository _readRepository;
 
     public UserController(
-        UserQueryHandler queryHandler,
+        IUserReadRepository readRepository,
         IMediator mediator)
     {
-        _queryHandler = queryHandler;
+        _readRepository = readRepository;
         _mediator = mediator;
     }
     
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] CreateUserCommand command)
     {
-        var id = await _mediator.Send(command);
+        var result = await _mediator.Send(command);
+
+        if (!result.Success)
+        {
+            return BadRequest(new
+            {
+                error =  result.ErrorMessage
+            });
+        }
         
-        return Ok(new { Id = id, Message = "Usuário criado com sucesso" });
+        return Ok(new {  Message = "Usuário criado com sucesso", userId = result.Data });
     }
 
     #region queries
@@ -37,7 +44,7 @@ public class UserController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
-        var users = await _queryHandler.GetAllUsersAsync();
+        var users = await _readRepository.GetAllAsync();
         return Ok(users);
     }
 

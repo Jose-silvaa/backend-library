@@ -1,27 +1,36 @@
 ﻿using library.Domain.Domain.Interfaces.Write;
 
+
 namespace library.Domain.Domain.Infrastructure.Repositories.Generic;
 
 public class GenericWriteRepository<T>  : IGenericWriteRepository<T> where T : class
 {
-    private IGenericWriteRepository<T> _genericWriteRepositoryImplementation;
+    private readonly LibraryDbContext _context;
+
+    public GenericWriteRepository(LibraryDbContext context)
+    {
+        _context = context;
+    }
     public virtual Task AddAsync(T entity)
     {
-        return _genericWriteRepositoryImplementation.AddAsync(entity);
+        _context.Set<T>().Add(entity);
+        return Task.CompletedTask;
     }
 
     public virtual Task UpdateAsync(T entity)
     {
-        return _genericWriteRepositoryImplementation.UpdateAsync(entity);
+       _context.Set<T>().Update(entity);
+       return Task.CompletedTask;   
     }
 
     public virtual Task DeleteAsync(T entity)
     {
-        return _genericWriteRepositoryImplementation.DeleteAsync(entity);
+       _context.Set<T>().Remove(entity);
+       return Task.CompletedTask;
     }
 
     public virtual Task SaveChangesAsync()
     {
-        return _genericWriteRepositoryImplementation.SaveChangesAsync();
+        return _context.SaveChangesAsync();
     }
 }

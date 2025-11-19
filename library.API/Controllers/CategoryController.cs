@@ -1,6 +1,7 @@
 ﻿using library.Domain.Domain.Category.Read.Repositories;
 using library.Domain.Domain.Category.Write.Commands;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace library.API.Controllers;
@@ -21,6 +22,8 @@ public class CategoryController : ControllerBase
         _mediator = mediator;
     }
 
+    #region commands
+
     [HttpPost]
     public async Task<IActionResult> Create(CreateCategoryCommand cmd)
     {
@@ -28,6 +31,9 @@ public class CategoryController : ControllerBase
         
         return Ok(new {Message = "Categoria criada com sucesso"});
     }
+    
+    #endregion
+    
 
     #region queries
     

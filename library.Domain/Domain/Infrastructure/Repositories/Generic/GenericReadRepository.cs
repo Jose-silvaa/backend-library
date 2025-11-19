@@ -1,28 +1,34 @@
 ﻿using System.Linq.Expressions;
 using library.Domain.Domain.Interfaces.Read;
+using Microsoft.EntityFrameworkCore;
 
 namespace library.Domain.Domain.Infrastructure.Repositories.Generic;
 
 public class GenericReadRepository<T> : IGenericReadRepository<T> where T : class
 {
-    private IGenericReadRepository<T> _genericReadRepositoryImplementation;
-    public virtual Task<T?> GetByIdAsync(Guid id)
+    private readonly LibraryDbContext _context;
+
+    public GenericReadRepository(LibraryDbContext context)
     {
-        return _genericReadRepositoryImplementation.GetByIdAsync(id);
+        _context = context;
+    }
+    public virtual async Task<T?> GetByIdAsync(Guid id)
+    {
+        return await _context.Set<T>().FindAsync(id);
     }
 
-    public virtual Task<IEnumerable<T>> GetAllAsync()
+    public virtual async Task<IEnumerable<T>> GetAllAsync()
     {
-        return _genericReadRepositoryImplementation.GetAllAsync();
+        return await _context.Set<T>().ToListAsync();
     }
 
-    public Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> predicate)
+    public virtual async Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> predicate)
     {
-        return _genericReadRepositoryImplementation.FindAsync(predicate);
+        return await _context.Set<T>().Where(predicate).ToListAsync();
     }
 
-    public Task<bool> ExistsAsync(Expression<Func<T, bool>> predicate)
+    public virtual async Task <bool> ExistsAsync(Expression<Func<T, bool>> predicate)
     {
-        return _genericReadRepositoryImplementation.ExistsAsync(predicate);
+        return await _context.Set<T>().AnyAsync(predicate);
     }
 }

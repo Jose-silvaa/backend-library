@@ -10,7 +10,8 @@ namespace library.Domain.Domain.Book.Write.CommandHandlers;
 
 public class BookCommandHandlers :
     IRequestHandler<CreateBookCommand, Result<Guid>>,
-    IRequestHandler<UpdateBookCommand, Result<Guid>>
+    IRequestHandler<UpdateBookCommand, Result<Guid>>,
+    IRequestHandler<DeleteBookCommand, Result<Guid>>
 {
 
     private readonly IBookWriteRepository _bookWriteRepository;
@@ -114,6 +115,18 @@ public class BookCommandHandlers :
         await _bookWriteRepository.UpdateAsync(book);
         await _bookWriteRepository.SaveChangesAsync();
 
+        return Result<Guid>.Ok(book.Id);
+    }
+
+    public async Task<Result<Guid>> Handle(DeleteBookCommand cmd, CancellationToken cancellationToken)
+    {
+        var book = await _bookReadRepository.GetByIdAsync(cmd.Id);
+
+        if (book == null)
+            return Result<Guid>.Fail("Livro não encontrado");
+        
+        await _bookWriteRepository.DeleteAsync(book);
+        
         return Result<Guid>.Ok(book.Id);
     }
 }

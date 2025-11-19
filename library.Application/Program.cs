@@ -5,6 +5,8 @@ using library.Domain.Domain.Book.Write.Repositories;
 using library.Domain.Domain.Category.Read.Repositories;
 using library.Domain.Domain.Category.Write.Repositories;
 using library.Domain.Domain.Infrastructure;
+using library.Domain.Domain.Loan.Read.Repositories;
+using library.Domain.Domain.Loan.Write.Repositories;
 using library.Domain.Domain.User.Read.Model;
 using library.Domain.Domain.User.Read.Repositories;
 using library.Domain.Domain.User.Write.Commands;
@@ -19,6 +21,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+
 
 builder.Services.AddCors(options =>
 {
@@ -38,12 +42,18 @@ builder.Services.AddDbContext<LibraryDbContext>(options =>
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<CreateUserCommand>());
 
 builder.Services.AddScoped<IPasswordHasher<UserModel>, PasswordHasher<UserModel>>();
+
 builder.Services.AddScoped<IUserWriteRepository, UserWriteRepository>();
-builder.Services.AddScoped<UserQueryHandler>();
+builder.Services.AddScoped<IUserReadRepository,  UserReadRepository>();
+
 builder.Services.AddScoped<ICategoryWriteRepository, CategoryWriteRepository>();
 builder.Services.AddScoped<ICategoryReadRepository, CategoryReadRepository>();
+
 builder.Services.AddScoped<IBookWriteRepository, BookWriteRepository>();
 builder.Services.AddScoped<IBookReadRepository, BookReadRepository>();
+
+builder.Services.AddScoped<ILoanWriteRepository, LoanWriteRepository>();
+builder.Services.AddScoped<ILoanReadRepository, LoanReadRepository>();
 
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

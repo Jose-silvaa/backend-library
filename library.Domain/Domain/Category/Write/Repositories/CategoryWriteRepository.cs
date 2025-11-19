@@ -2,32 +2,20 @@
 using library.Domain.Domain.Infrastructure;
 using library.Domain.Domain.Infrastructure.Repositories.Generic;
 using library.Domain.Domain.Interfaces.Write;
+using Microsoft.EntityFrameworkCore;
 
 namespace library.Domain.Domain.Category.Write.Repositories;
 
 public interface ICategoryWriteRepository : IGenericWriteRepository<CategoryModel>
 {
-    new Task AddAsync(CategoryModel category);
-    new Task SaveChangesAsync();
+ 
 }
 
 
 public class CategoryWriteRepository : GenericWriteRepository<CategoryModel>, ICategoryWriteRepository
 {
-    private readonly LibraryDbContext _context;
-
-    public CategoryWriteRepository(LibraryDbContext context)
+    public CategoryWriteRepository(LibraryDbContext context) : base(context)
     {
-        _context = context;
-    }
-    
-    public override async Task AddAsync(CategoryModel category)
-    {
-        await _context.Categories.AddAsync(category);
-    }
-    
-    public override Task SaveChangesAsync()
-    {
-        return _context.SaveChangesAsync();
+        
     }
 }

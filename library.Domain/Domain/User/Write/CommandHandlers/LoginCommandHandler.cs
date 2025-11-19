@@ -1,6 +1,7 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using library.Domain.Domain.Infrastructure;
 using library.Domain.Domain.User.Read.Model;
 using library.Domain.Domain.User.Read.Repositories;
 using library.Domain.Domain.User.Write.Commands;
@@ -12,15 +13,15 @@ using JwtRegisteredClaimNames = Microsoft.IdentityModel.JsonWebTokens.JwtRegiste
 
 namespace library.Domain.Domain.User.Write.CommandHandlers;
 
-public class LoginCommandHandler : IRequestHandler<LoginCommand, string>
+public class LoginCommandHandler : IRequestHandler<LoginCommand, Result<string>>
 {
-    private readonly UserQueryHandler _readRepository;
+    private readonly IUserReadRepository _readRepository;
     private readonly IPasswordHasher<UserModel> _passwordHasher;
     private readonly IConfiguration _config;
 
     public LoginCommandHandler(
         IPasswordHasher<UserModel> passwordHasher,
-        UserQueryHandler readRepository,
+        IUserReadRepository readRepository,
         IConfiguration config)
     {
         _readRepository = readRepository;
@@ -28,19 +29,22 @@ public class LoginCommandHandler : IRequestHandler<LoginCommand, string>
         _config = config;
     }
     
-    public async Task<string> Handle(LoginCommand cmd, CancellationToken cancellationToken)
+    public async Task<Result<string>> Handle(LoginCommand cmd, CancellationToken cancellationToken)
     {
-        var user = await _readRepository.GetUserByEmailAsync(cmd.Email, cancellationToken);
+        var user = await _readRepository.GetUserByEmailAsync(cmd.Email);
 
         if (user == null)
-            throw new UnauthorizedAccessException("Email ou senha inválidos.");
+            return Result<string>.Fail("E-mail ou senha inválidos.");
+
 
         var verify = _passwordHasher.VerifyHashedPassword(user, user.Password, cmd.Password);
 
         if (verify != PasswordVerificationResult.Success)
-            throw new UnauthorizedAccessException("Email ou senha inválidos.");
+            return Result<string>.Fail("E-mail ou senha inválidos.");
+
+        var token = GenerateJwtToken(user);
         
-        return GenerateJwtToken(user);
+        return Result<string>.Ok(token);
     }
     
     private string GenerateJwtToken(UserModel user)

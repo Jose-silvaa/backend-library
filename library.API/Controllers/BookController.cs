@@ -35,6 +35,7 @@ public class BookController : ControllerBase
     }
 
     [HttpPatch("{id:guid}")]
+    [Route("Update")]
     public async Task<IActionResult> Update(Guid id, [FromBody] UpdateBookCommand command)
     {
         command.Id = id;
@@ -45,6 +46,19 @@ public class BookController : ControllerBase
             return BadRequest(new { error = result.ErrorMessage});
         
         return Ok(new {Message = "Livro atualizado com sucesso"});
+    }
+
+    [HttpDelete("{id:guid}")]
+    public async Task<IActionResult> Delete(Guid id)
+    {
+        var command = new DeleteBookCommand { Id = id };
+        
+        var result = await _mediator.Send(command);
+        
+        if(!result.Success)
+            return BadRequest(new { error = result.ErrorMessage});
+        
+        return Ok(new {Message = result.Success});
     }
     
     #endregion
@@ -65,6 +79,14 @@ public class BookController : ControllerBase
         
         return Ok(book);
     }
+    
+    [HttpGet]
+    public async Task<IActionResult> GetNumberBooks()
+    {
+        var books = await _bookReadRepository.GetTotalNumberOfBooks();
+        return Ok(books);
+    }
+    
     
     #endregion
     
