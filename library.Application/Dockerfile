@@ -10,9 +10,9 @@ FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 
-COPY ["src/library.Application/library.Application.csproj", "library.Application/"]
-COPY ["src/library.API/library.API.csproj", "library.API/"]
-COPY ["src/library.Domain/library.Domain.csproj", "library.Domain/"]
+COPY ["library_CQRS/library.Application/library.Application.csproj", "src/library.Application/"]
+COPY ["library_CQRS/library.API/library.API.csproj", "src/library.API/"]
+COPY ["library_CQRS/library.Domain/library.Domain.csproj", "src/library.Domain/"]
 
 RUN dotnet restore "library.Application/library.Application.csproj"
 COPY . .
