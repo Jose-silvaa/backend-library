@@ -36,8 +36,17 @@ builder.Services.AddCors(options =>
     });
 });
 
+var connectionString = Environment.GetEnvironmentVariable("DEFAULT_CONNECTION");
+
+if (string.IsNullOrEmpty(connectionString))
+{
+    throw new InvalidOperationException("A variável de ambiente DEFAULT_CONNECTION não está definida.");
+}
+
+// Configura o DbContext usando a connection string da variável de ambiente
 builder.Services.AddDbContext<LibraryDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseNpgsql(connectionString));
+
 
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<CreateUserCommand>());
 
