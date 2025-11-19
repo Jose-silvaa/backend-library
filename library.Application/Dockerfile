@@ -8,11 +8,12 @@ ENV PATH="$PATH:/root/.dotnet/tools"
 
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 ARG BUILD_CONFIGURATION=Release
-WORKDIR /src2
-RUN echo ${PWD} && ls -lR
-COPY ["library.Application/library.Application.csproj", "library.Application/"]
-COPY ["library.API/library.API.csproj", "library.API/"]
-COPY ["library.Domain/library.Domain.csproj", "library.Domain/"]
+WORKDIR /src
+
+COPY "library.Application/library.Application.csproj" "library.Application/"
+COPY "library.API/library.API.csproj" "library.API/"
+COPY "library.Domain/library.Domain.csproj" "library.Domain/"
+
 RUN dotnet restore "library.Application/library.Application.csproj"
 COPY . .
 WORKDIR "/src/library.Application"
